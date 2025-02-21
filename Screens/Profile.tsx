@@ -124,7 +124,7 @@ const Profile = ({route,navigation}) => {
             </View>
           </View>
 
-          <View style={{padding: 20}}>
+          <View style={{paddingHorizontal: 20}}>
             <Text style={styles.title}>About Me</Text>
             <Text
               style={
@@ -191,9 +191,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontFamily: font,
-    fontWeight: 'bold',
+    fontWeight: '500',
     color: '#000000',
-    fontSize: 16,
+    fontSize: 20,
   },
   body: {
     fontFamily: font,
@@ -217,15 +217,15 @@ const styles = StyleSheet.create({
     color: '#555',
   },
   contact: {
-    paddingVertical: 20,
+    paddingVertical: 12,
     borderRadius: 7,
     borderWidth: 1,
     borderColor: '#ccc',
-    backgroundColor: 'rgba(231, 231, 231, 0.21)',
+    backgroundColor: 'rgba(233, 239, 240, 0.49)',
     marginHorizontal: 20,
     paddingHorizontal: 12,
     gap: 10,
-    marginBottom: 12,
+    marginVertical:12
   },
   contactText: {
     fontFamily: font,
@@ -234,14 +234,22 @@ const styles = StyleSheet.create({
   },
   person: {
     width: 150,
-    borderColor: '#ccc',
-    borderWidth: 2,
+    borderColor: '#fff',
+    borderWidth: 1,
     marginHorizontal: 20,
     paddingBottom: 12,
     alignItems: 'center',
-    overflow: 'hidden',
+    backgroundColor:"#fff",
     gap: 10,
     borderRadius: 12,
+    elevation: 3,
+    shadowColor: '#ccc',
+    shadowOffset: {
+      width: 3,
+      height: 3,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 4,
   },
   btn: {
     backgroundColor: 'rgba(6, 122, 247, 0.59)',

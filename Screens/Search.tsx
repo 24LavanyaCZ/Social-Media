@@ -13,7 +13,6 @@ import {baseUrl, endPoints} from '../Services/urls';
 import {FlatList} from 'react-native-gesture-handler';
 
 const font = Platform.OS === 'ios' ? 'Gill Sans' : 'Lato-Regular';
-
 const Search = ({navigation}) => {
   const [searchUser, setSearchUser] = useState('');
   const [users, setUsers] = useState([]);
@@ -83,6 +82,7 @@ const Search = ({navigation}) => {
             <Text style={styles.userItem}>{item.name}</Text>
           </TouchableOpacity>
         )}
+        showsVerticalScrollIndicator={false}
       />
     )}
   </View>
@@ -100,7 +100,7 @@ const styles = StyleSheet.create({
   search: {
     borderWidth: 1,
     padding: 10,
-    borderColor: '#ccc',
+    borderColor: '#999',
     borderRadius: 6,
     marginVertical: 12,
   },
@@ -112,7 +112,7 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
   users: {
-    backgroundColor: '#fff',
+    backgroundColor: 'rgba(233, 239, 240, 0.49)',
     paddingHorizontal: 20,
     paddingVertical: 12,
     flexDirection: 'row',
@@ -121,7 +121,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
     borderRadius: 12,
     borderWidth: 1,
-    borderColor: '#ccc',
+    borderColor: '#999',
   },
   userItem: {
     fontSize: 16,

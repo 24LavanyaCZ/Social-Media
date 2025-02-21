@@ -101,6 +101,7 @@ const Home = ({navigation}) => {
     return (
       <View style={styles.cards}>
         <View style={styles.card}>
+          <View style={{overflow:"hidden"}}>
           <View style={styles.texts}>
             <Text style={styles.title}>{item.title}</Text>
             <Text style={styles.body}>{item.body}</Text>
@@ -125,6 +126,7 @@ const Home = ({navigation}) => {
               renderItem={renderComment}
             />
           )}
+          </View>
         </View>
       </View>
     );
@@ -142,6 +144,7 @@ const Home = ({navigation}) => {
               height: 40,
               objectFit: 'cover',
               borderRadius: 40 / 2,
+              
             }}
           />
         </TouchableOpacity>
@@ -190,7 +193,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#ccc',
     elevation: 3,
-    shadowColor: 'grey',
+    shadowColor: '#999',
     shadowOffset: {
       width: 3,
       height: 3,
@@ -199,6 +202,7 @@ const styles = StyleSheet.create({
     shadowRadius: 4,
     gap: 7,
     borderRadius: 7,
+    
     marginVertical: 2,
   },
   texts: {
