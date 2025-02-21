@@ -15,7 +15,7 @@ import axios from 'axios';
 import {baseUrl, endPoints} from '../Services/urls';
 
 const font = Platform.OS === 'ios' ? 'Gill Sans' : 'Lato-Bold';
-const Profile = ({route}) => {
+const Profile = ({route,navigation}) => {
   const [isUser, setIsUser] = useState(false);
   const user = route.params.data;
   const [users, setUsers] = useState([]);
@@ -38,6 +38,11 @@ const Profile = ({route}) => {
   console.log(isUser);
   const screenWidth = Dimensions.get('window').width;
 
+
+  const handleFollow = (data) =>{  //why data because above we have used const user = route.params.data this line where there is .data. If I ue other name like user then I need to do this const user = route.params.data.user;  which is difficult to handle
+    console.log(user)
+    navigation.push("Profile",{data})
+  }
   const renderUsers = ({item}) => {
     return (
     <View>
@@ -59,7 +64,7 @@ const Profile = ({route}) => {
             }}
           />
           <Text style={styles.name}>{item.name}</Text>
-          <TouchableOpacity style={styles.btn}>
+          <TouchableOpacity style={styles.btn} onPress={()=>handleFollow(item)}>
             <Text style={{color: '#fff'}}>Follow Me</Text>
           </TouchableOpacity>
         </View>

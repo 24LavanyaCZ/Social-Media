@@ -12,7 +12,7 @@ import axios from 'axios';
 import {baseUrl, endPoints} from '../Services/urls';
 import {FlatList} from 'react-native-gesture-handler';
 
-const font = Platform.OS === 'android' ? 'Gill Sans' : 'Lato-Regular';
+const font = Platform.OS === 'ios' ? 'Gill Sans' : 'Lato-Regular';
 
 const Search = ({navigation}) => {
   const [searchUser, setSearchUser] = useState('');
@@ -62,10 +62,15 @@ const Search = ({navigation}) => {
         onChangeText={setSearchUser}
       />
 
+    {filteredUsers.length === 0 ? (
+      <Text style={{ textAlign: 'center', marginTop: 20, fontSize: 16 }}>
+        No Users Found
+      </Text>
+    ) : (
       <FlatList
         data={filteredUsers}
         keyExtractor={item => item.id.toString()}
-        renderItem={({item}) => (
+        renderItem={({ item }) => (
           <TouchableOpacity
             onPress={() => handleNavigateProfile(item.id)}
             style={styles.users}>
@@ -79,8 +84,9 @@ const Search = ({navigation}) => {
           </TouchableOpacity>
         )}
       />
-    </View>
-  );
+    )}
+  </View>
+          );
 };
 
 export default Search;

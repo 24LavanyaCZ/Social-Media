@@ -16,7 +16,7 @@ import axios from 'axios';
 import {baseUrl, endPoints} from '../Services/urls';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-const font = Platform.OS === 'ios' ? 'Gill Sans' : 'Lato-Black'
+const font = Platform.OS === 'ios' ? 'Gill-Sans' : 'Lato-Regular';
 
 const Home = ({navigation}) => {
   const [users, setUsers] = useState([]);
@@ -24,7 +24,6 @@ const Home = ({navigation}) => {
   const [comments, setComments] = useState([]);
   const [selectedPostId, setSelectedPostId] = useState(null);
   const [selectedUser, setSelectedUser] = useState({});
-
 
   useEffect(() => {
     axios
@@ -60,18 +59,16 @@ const Home = ({navigation}) => {
     setSelectedPostId(selectedPostId == id ? null : id);
   };
 
-  const handleNavigateProfile = (id) => {
+  const handleNavigateProfile = id => {
     try {
-      const postItem = posts.find(post => post.userId===id)
-    console.log(postItem)
-    const user = users.find(user => user.id===postItem.userId)
-    navigation.push('Profile',{data:user})
+      const postItem = posts.find(post => post.userId === id);
+      console.log(postItem);
+      const user = users.find(user => user.id === postItem.userId);
+      navigation.push('Profile', {data: user});
     } catch (error) {
-      console.log(error)
-      navigation.push('Profile',{data:"No user found"})
+      console.log(error);
+      navigation.push('Profile', {data: 'No user found'});
     }
-    
-    
   };
 
   /*COMMENTS=[{
@@ -96,7 +93,7 @@ const Home = ({navigation}) => {
   // };
 
   console.log(comments.length);
-  
+
   const renderPosts = ({item}) => {
     const filteredComments = comments.filter(
       comment => comment.postId === item.id,
@@ -118,7 +115,7 @@ const Home = ({navigation}) => {
             style={{paddingVertical: 4, marginBottom: 3}}
             onPress={() => handleShowComments(item.id)}>
             <Text style={styles.commentText}>
-              {filteredComments.length} <Icon name='commenting-o' size={20}/>
+              {filteredComments.length} <Icon name="commenting-o" size={20} />
             </Text>
           </Pressable>
           {selectedPostId === item.id && (
@@ -133,27 +130,26 @@ const Home = ({navigation}) => {
     );
   };
   const renderComment = ({item}) => (
-      <View style={styles.commentSection}>
-        <View style={styles.profile}>
-          <TouchableOpacity onPress={() => handleNavigateProfile(item.id)}>
-            <Image
-              source={{
-                uri: 'https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHVzZXIlMjBwcm9maWxlfGVufDB8fDB8fHww',
-              }}
-              style={{
-                width: 40,
-                height: 40,
-                objectFit: 'cover',
-                borderRadius: 40 / 2,
-              }}
-            />
-          </TouchableOpacity>
-          <Text style={styles.commentTitle}>{item.name}</Text>
-        </View>
-
-        <Text style={styles.commentBody}>{item.body}</Text>
+    <View style={styles.commentSection}>
+      <View style={styles.profile}>
+        <TouchableOpacity onPress={() => handleNavigateProfile(item.id)}>
+          <Image
+            source={{
+              uri: 'https://images.unsplash.com/photo-1603415526960-f7e0328c63b1?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fHVzZXIlMjBwcm9maWxlfGVufDB8fDB8fHww',
+            }}
+            style={{
+              width: 40,
+              height: 40,
+              objectFit: 'cover',
+              borderRadius: 40 / 2,
+            }}
+          />
+        </TouchableOpacity>
+        <Text style={styles.commentTitle}>{item.name}</Text>
       </View>
-    
+
+      <Text style={styles.commentBody}>{item.body}</Text>
+    </View>
   );
 
   // -----------------------------------------------------------------------------
@@ -184,8 +180,8 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontFamily: font,
     marginBottom: 12,
-    fontWeight:'700',
-    paddingTop: 12
+    fontWeight: '700',
+    paddingTop: 12,
   },
   cards: {},
   card: {
@@ -210,12 +206,13 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   title: {
-    fontFamily: 'Lato-  ',
+    fontFamily: font,
     fontWeight: 'bold',
     fontSize: 16,
   },
   body: {
     fontFamily: font,
+    fontWeight: Platform.OS==='ios'? null:'500',
     fontSize: 14,
   },
   commentText: {
@@ -223,7 +220,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     color: 'blue',
     opacity: 0.8,
-    alignItems:"center"
+    alignItems: 'center',
   },
   commentSection: {
     // maxWidth:400,    //shrinked due to margin auto
@@ -234,22 +231,23 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   commentTitle: {
-    flex: 1,        
-    flexWrap: 'wrap',      
+    flex: 1,
+    flexWrap: 'wrap',
     fontFamily: font,
-    fontWeight: '500',
-    fontSize: 14,   
+    fontWeight: Platform.OS==='ios'? '':'700',
+    fontSize: 14,
   },
-  
+
   commentBody: {
     fontFamily: font,
-    fontWeight: '200',
-    flexWrap:'wrap',
-    width:300,
-    fontSize: 12,   
-    padding:12
+    fontWeight: 'medium',
+    flexWrap: 'wrap',
+    width: 300,
+    fontSize: 12,
+    padding: 12,
+    color:'#333'
   },
-  
+
   profile: {
     flexDirection: 'row',
     alignItems: 'center',
@@ -257,7 +255,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 12,
     paddingVertical: 7,
     borderRadius: 7,
-    // flexWrap: 'wrap',   
+    // flexWrap: 'wrap',
   },
-  
 });
