@@ -1,4 +1,4 @@
-import {SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
+import {Platform, SafeAreaView, ScrollView, StyleSheet, Text, View} from 'react-native';
 import React from 'react';
 import Home from './Screens/Home';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
@@ -7,6 +7,9 @@ import {NavigationContainer} from '@react-navigation/native';
 import Search from './Screens/Search';
 import {createStackNavigator} from '@react-navigation/stack';
 import Profile from './Screens/Profile';
+import Icon from 'react-native-vector-icons/FontAwesome';
+
+
 
 const App = () => {
   const Tab = createBottomTabNavigator();
@@ -17,12 +20,21 @@ const App = () => {
       <Tab.Screen
        name="Home"
        component={Home}
-       options={{headerShown: false}}
+       options={{headerShown: false,
+       tabBarIcon:()=>(
+        <Icon name="home" size={20}/>
+       )
+       }}
       />
       <Tab.Screen
         name="Search"
         component={Search}
-        options={{headerShown: false}}
+        options={{headerShown: false,
+          tabBarIcon:()=>(
+            <Icon name="search" size={20}/>
+           )
+        }}
+        
       />
     </Tab.Navigator>
   );
@@ -36,7 +48,7 @@ const App = () => {
                 name="Back"
                 component={TabNavigator}
               />
-              <Stack.Screen name="Profile" component={Profile} options={{headerShown: false}}/>
+              <Stack.Screen name="Profile" component={Profile} options={{headerShown: true}}/>
             </Stack.Navigator>
           </NavigationContainer>
         </SafeAreaProvider>

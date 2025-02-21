@@ -2,6 +2,7 @@ import {
   Alert,
   FlatList,
   Image,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -13,8 +14,9 @@ import {
 import React, {useEffect, useState} from 'react';
 import axios from 'axios';
 import {baseUrl, endPoints} from '../Services/urls';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
-
+const font = Platform.OS === 'ios' ? 'Gill Sans' : 'Lato-Black'
 
 const Home = ({navigation}) => {
   const [users, setUsers] = useState([]);
@@ -59,13 +61,16 @@ const Home = ({navigation}) => {
   };
 
   const handleNavigateProfile = (id) => {
-
-    const postItem = posts.find(post => post.userId===id)
+    try {
+      const postItem = posts.find(post => post.userId===id)
     console.log(postItem)
     const user = users.find(user => user.id===postItem.userId)
-
-    console.log(user)
     navigation.push('Profile',{data:user})
+    } catch (error) {
+      console.log(error)
+      navigation.push('Profile',{data:"No user found"})
+    }
+    
     
   };
 
@@ -91,6 +96,7 @@ const Home = ({navigation}) => {
   // };
 
   console.log(comments.length);
+  
   const renderPosts = ({item}) => {
     const filteredComments = comments.filter(
       comment => comment.postId === item.id,
@@ -112,7 +118,7 @@ const Home = ({navigation}) => {
             style={{paddingVertical: 4, marginBottom: 3}}
             onPress={() => handleShowComments(item.id)}>
             <Text style={styles.commentText}>
-              {filteredComments.length + ' Comments'}
+              {filteredComments.length} <Icon name='commenting-o' size={20}/>
             </Text>
           </Pressable>
           {selectedPostId === item.id && (
@@ -127,8 +133,6 @@ const Home = ({navigation}) => {
     );
   };
   const renderComment = ({item}) => (
-
-    
       <View style={styles.commentSection}>
         <View style={styles.profile}>
           <TouchableOpacity onPress={() => handleNavigateProfile(item.id)}>
@@ -178,8 +182,10 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 20,
-    fontFamily: 'Gill Sans',
+    fontFamily: font,
     marginBottom: 12,
+    fontWeight:'700',
+    paddingTop: 12
   },
   cards: {},
   card: {
@@ -204,49 +210,54 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
   },
   title: {
-    fontFamily: 'Gill Sans',
+    fontFamily: 'Lato-  ',
     fontWeight: 'bold',
     fontSize: 16,
   },
   body: {
-    fontFamily: 'Gill Sans',
+    fontFamily: font,
     fontSize: 14,
   },
   commentText: {
-    fontFamily: 'Gill Sans',
+    fontFamily: font,
     paddingHorizontal: 12,
     color: 'blue',
-    opacity: '0.8',
+    opacity: 0.8,
+    alignItems:"center"
   },
   commentSection: {
+    // maxWidth:400,    //shrinked due to margin auto
     padding: 3,
-    flexWrap: 'wrap',
+    // flexWrap: 'wrap',
     margin: 'auto',
     backgroundColor: 'rgba(233, 239, 240, 0.49)',
     marginVertical: 12,
   },
   commentTitle: {
-    fontFamily: 'Gill Sans',
+    flex: 1,        
+    flexWrap: 'wrap',      
+    fontFamily: font,
     fontWeight: '500',
-    fontSize: 14,
+    fontSize: 14,   
   },
+  
   commentBody: {
-    fontFamily: 'Gill Sans',
+    fontFamily: font,
     fontWeight: '200',
-    fontSize: 12,
-    width: 270,
-    flexWrap: 'wrap',
-    marginLeft: 50,
-    marginVertical: 10,
+    flexWrap:'wrap',
+    width:300,
+    fontSize: 12,   
+    padding:12
   },
+  
   profile: {
     flexDirection: 'row',
+    alignItems: 'center',
     gap: 12,
     paddingHorizontal: 12,
     paddingVertical: 7,
-    alignItems: 'center',
     borderRadius: 7,
-    borderBottomWidth: 0.7,
-    borderBottomColor: '#333',
+    // flexWrap: 'wrap',   
   },
+  
 });
