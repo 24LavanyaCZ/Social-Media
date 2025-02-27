@@ -17,10 +17,12 @@ import {useUsers} from '../Context/UserContext';
 const font = Platform.OS === 'ios' ? 'Gill Sans' : 'Lato-Bold';
 
 const Profile = ({route, navigation}) => {
+  
   const [isUser, setIsUser] = useState(false);
   const user = route.params.data;
   const users = useUsers();
 
+  //API ISSUE SO I AM USING THIS....AFTER SOME POSTS THERE ARE NO USERS ONLY
   useEffect(() => {
     if (typeof user === 'object') setIsUser(true);
     else setIsUser(false);
@@ -30,13 +32,15 @@ const Profile = ({route, navigation}) => {
   const screenWidth = Dimensions.get('window').width;
 
   const handleFollow = data => {
-    //why data because above we have used const user = route.params.data this line where there is .data. If I ue other name like user then I need to do this const user = route.params.data.user;  which is difficult to handle
+    //why data because above we have used const user = route.params.data this line where there is .data. If I use other name like user then I need to do this const user = route.params.data.user;  which is difficult to handle
     console.log(user);
     navigation.push('Profile', {data});
   };
   const renderUsers = ({item}) => {
     return (
       <View>
+
+        {/* Other than that current user, rest all users are shown */}
         {!(item.id === user.id) && (
           <View style={styles.person}>
             <Image

@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1080288624158",
+    "project_id": "showgram-67489",
+    "storage_bucket": "showgram-67489.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1080288624158:android:c98a45f5cf94504edf780f",
+        "android_client_info": {
+          "package_name": "com.showgram"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDM0MiIMikhNsc5TJn5vUSpztDaZp7iXCU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

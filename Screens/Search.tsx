@@ -18,9 +18,7 @@ const font = Platform.OS === 'ios' ? 'Gill Sans' : 'Lato-Regular';
 
 const Search = ({navigation}) => {
   const [searchUser, setSearchUser] = useState('');
-
   const users = useUsers() 
-
   const [filteredUsers, setFilteredUsers] = useState([]);
 
 

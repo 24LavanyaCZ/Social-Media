@@ -1,12 +1,10 @@
 import {Image, StyleSheet, Text, View} from 'react-native';
 import React, {useEffect} from 'react';
-import {useNavigation} from '@react-navigation/native';
 
-const Splash = () => {
-  const navigation = useNavigation();
+const Splash = ({navigation}) => {
   useEffect(() => {
     setTimeout(() => {
-      navigation.replace('Back');
+      navigation.replace('Back');   // Replace ---- never comes back to this screen
     }, 3000);
   }, []);
 

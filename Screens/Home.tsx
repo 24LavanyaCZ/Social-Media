@@ -11,8 +11,6 @@ import {
   View,
 } from 'react-native';
 import React, {useEffect, useState} from 'react';
-import axios from 'axios';
-import {baseUrl, endPoints} from '../Services/urls';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import { usePosts } from '../Context/PostsContext';
 import { useComments } from '../Context/CommentsContext';
@@ -22,15 +20,22 @@ const font = Platform.OS === 'ios' ? 'Gill-Sans' : 'Lato-Regular';
 
 const Home = ({navigation}) => {
   const [selectedPostId, setSelectedPostId] = useState(null);
+
   const posts = usePosts(); 
   const comments = useComments()
   const users = useUsers() 
  
   console.log("Users",users)
+
+
+  //initially selectedPostId is null so no comments will be shown
+  //when we click on a post, selectedPostId will be set to the id of the post
+  //if selectedPostId is equal to the id of the post, comments will be shown
   const handleShowComments = id => {
     setSelectedPostId(selectedPostId == id ? null : id);
   };
 
+  
   const handleNavigateProfile = id => {
     try {
       const postItem = posts.find(post => post.userId === id);
@@ -54,17 +59,10 @@ const Home = ({navigation}) => {
   FILTER COMMENTS
   */
 
-  // const renderComment = ({item}) => {
-  //   const filteredComments = posts.filter(post => post.id === item.postId);
 
-  //   return (
-  //     <View>
-  //       <Text>{item.name}</Text>
-  //     </View>
-  //   );
-  // };
 
   console.log(comments.length);
+
   const onShare = async post => {
     try {
       const result = await Share.share({
@@ -85,7 +83,6 @@ const Home = ({navigation}) => {
     }
   };
 
-  console.log("comments",comments)
   const renderPosts = ({item}) => {
     const filteredComments = comments.filter(
       comment => comment.postId === item.id,
@@ -119,7 +116,9 @@ const Home = ({navigation}) => {
                 />
               </Pressable>
             </View>
-            {selectedPostId === item.id && (
+
+            
+            {selectedPostId === item.id && (   //If I dont add this all the posts comment section will show up 
               <FlatList
                 data={filteredComments}
                 keyExtractor={item => item.id.toString()}
