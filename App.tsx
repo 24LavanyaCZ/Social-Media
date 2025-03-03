@@ -15,6 +15,7 @@ import {
 } from './Services/Notifications';
 import notifee, {AndroidImportance, EventType} from '@notifee/react-native';
 import {getApp} from '@react-native-firebase/app';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const App = () => {
   const app = getApp();
@@ -28,6 +29,7 @@ const App = () => {
     // Foreground notification listener
     const unsubscribe = messaging.onMessage(async remoteMessage => {
       console.log(remoteMessage);
+
       await notifee.displayNotification({
         title: remoteMessage.notification?.title || 'Default Title',
         body: remoteMessage.notification?.body || 'Default Body',
@@ -42,17 +44,30 @@ const App = () => {
 
     messaging.setBackgroundMessageHandler(async remoteMessage => {
       console.log('Message handled in the background!', remoteMessage);
-      await notifee.displayNotification({
-        title: remoteMessage.notification?.title || 'New Notification',
-        body: remoteMessage.notification?.body || 'New Body',
-        android: {
-          channelId: 'default',
-          importance: AndroidImportance.HIGH,
-          smallIcon: 'ic_launcher',
-          pressAction: {id: 'default'},
-        },
-      });
-    });
+
+      if (remoteMessage.data) {
+          const notificationDisplayed = await AsyncStorage.getItem('newNotificationDisplayed');
+
+          if (!notificationDisplayed) {
+              await notifee.displayNotification({
+                  title: remoteMessage.notification?.title || 'NEW Title',
+                  body: remoteMessage.notification?.body || 'NEW Body',
+                  android: {
+                      channelId: 'default',
+                      importance: AndroidImportance.MAX,
+                      smallIcon: 'ic_launcher',
+                      pressAction: {id: 'default'},
+                  },
+              });
+              console.log(remoteMessage)
+              await AsyncStorage.setItem('newNotificationDisplayed', 'true');
+          } else {
+              console.log('Notification already displayed, skipping.');
+          }
+      } else {
+          console.log("Notification message received in background. Only data messages should be sent.");
+      }
+  });
     const unsubscribeOnBackground = notifee.onBackgroundEvent(
       async ({type, detail}) => {
         if (type === EventType.PRESS) {
