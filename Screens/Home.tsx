@@ -1,4 +1,5 @@
 import {
+  ActivityIndicator,
   Alert,
   FlatList,
   Image,
@@ -21,7 +22,7 @@ const font = Platform.OS === 'ios' ? 'Gill-Sans' : 'Lato-Regular';
 const Home = ({navigation}) => {
   const [selectedPostId, setSelectedPostId] = useState(null);
 
-  const posts = usePosts(); 
+  const { posts, loading, fetchMore } = usePosts();
   const comments = useComments()
   const users = useUsers() 
  
@@ -162,7 +163,12 @@ const Home = ({navigation}) => {
         data={posts}
         renderItem={renderPosts}
         keyExtractor={item => item.id.toString()}
-        initialNumToRender={10}
+        onEndReached={() => {
+          console.log("End reached, fetching more posts...");
+          fetchMore(); 
+        }}
+        onEndReachedThreshold={0.3}
+        ListFooterComponent={loading ? <ActivityIndicator size="large" color="blue" /> : null}
         ItemSeparatorComponent={() => <View style={{marginVertical: 12}} />}
       />
     </View>
