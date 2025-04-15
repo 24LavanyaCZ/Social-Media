@@ -38,6 +38,7 @@ export const PostProvider = ({children}) => {
       
     }
   };
+  //hi how are you
 
   useEffect(() => {
     fetchPosts(page);
